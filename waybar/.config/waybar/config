@@ -1,5 +1,3 @@
-/* ---- 💫 https://github.com/JaKooLit 💫 ---- */
-/* ---- Modificato da Gemini per una barra unica (Versione 3) ---- */
 
 [
   {
@@ -21,18 +19,15 @@
     "margin-left": 8,
     "margin-right": 8,
 
-    // --- MODULI A SINISTRA ---
     "modules-left": [
         "hyprland/workspaces#rw"	
       ],
 
-    // --- MODULI AL CENTRO (con orologio) ---
     "modules-center": [
         "group/notify",
         "clock"
     ],
 
-    // --- MODULI A DESTRA (Unione) ---
     "modules-right": [
         "custom/weather",     
         "battery",
