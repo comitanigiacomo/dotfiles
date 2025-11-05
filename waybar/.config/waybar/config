@@ -1,0 +1,50 @@
+/* ---- 💫 https://github.com/JaKooLit 💫 ---- */
+/* ---- Modificato da Gemini per una barra unica (Versione 3) ---- */
+
+[
+  {
+    "include": [
+      "$HOME/.config/waybar/Modules",
+      "$HOME/.config/waybar/ModulesWorkspaces",
+      "$HOME/.config/waybar/ModulesCustom",
+      "$HOME/.config/waybar/ModulesGroups",
+      "$HOME/.config/waybar/UserModules"
+    ],
+    "layer": "top",
+    "exclusive": true,
+    "passthrough": false,
+    "position": "top",
+    "spacing": 5,
+    "fixed-center": true,
+    "ipc": true,
+    "margin-top": 1,
+    "margin-left": 8,
+    "margin-right": 8,
+
+    // --- MODULI A SINISTRA ---
+    "modules-left": [
+        "hyprland/workspaces#rw"	
+      ],
+
+    // --- MODULI AL CENTRO (con orologio) ---
+    "modules-center": [
+        "group/notify",
+        "clock"
+    ],
+
+    // --- MODULI A DESTRA (Unione) ---
+    "modules-right": [
+        "custom/weather",     
+        "battery",
+		    "power-profiles-daemon",
+        "bluetooth",
+        //"custom/updater",        
+        "tray",
+        //"group/notify",
+        "mpris",
+        "pulseaudio",
+		    "custom/lock",
+        "custom/power"
+    ]
+  }
+]
