@@ -1,0 +1,10 @@
+*.log
+.cache/
+
+.zsh_history
+
+.DS_Store
+
+*.swp
+*.swo
+*~
