@@ -3,8 +3,7 @@
 # --- Variabili di Sistema ---
 DOTFILES_DIR=$HOME/dotfiles
 CONFIG_DIR=$HOME/.config
-STOW_PACKAGES="kitty nvim rofi swaync waybar gtk-3.0 gtk-4.0"
-
+STOW_PACKAGES="kitty nvim rofi swaync waybar gtk-3.0 gtk-4.0 wallust"
 # --- 1. Controllo Essenziale ---
 if ! command -v stow &> /dev/null; then
     echo "Errore: 'stow' non è installato. Installalo prima di procedere (es. sudo pacman -S stow)."
