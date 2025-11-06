@@ -1,69 +1,64 @@
-# I Miei Dotfiles per Hyprland (Ambiente Minimalista)
+# Hyprland Dotfiles
 
-Questa repository contiene la mia configurazione personale per **Hyprland**, pulita e pronta per essere replicata su una nuova installazione Linux. Ho rimosso tutti i file di backup, di stato e i profili alternativi per mantenere solo l'essenziale.
+This repository contains my personal configuration files for the **Hyprland** Wayland compositor, tailored for Fedora/Arch Linux distributions. The setup includes custom themes for Waybar, Rofi, Kitty, and Zsh (with Powerlevel10k).
 
-![Immagine di anteprima del mio desktop](https://[INSERISCI QUI IL LINK AL TUO SCREENSHOT])
+The installation is designed to run successfully on a **clean base system of hyperland
 
----
+## Prerequisites
 
-## 📦 Dipendenze Essenziali
+Before cloning or running the script, it is crucial that the following base packages are installed on the system.
 
-**ATTENZIONE:** Prima di procedere con `stow`, è fondamentale installare tutti i pacchetti elencati di seguito. `stow` gestisce solo le configurazioni, non installa il software.
+### 1. Essential Packages (System-wide Installation)
 
-### Pacchetti di Sistema (Software)
-| Programma | Pacchetti Richiesti | Note |
-| :--- | :--- | :--- |
-| **Compositor/Core** | `hyprland`, `hyprlock`, `hypridle` | Base del sistema. |
-| **Interfaccia** | `waybar`, `rofi` (o `rofi-wayland`), `swaync` | Barra, Launcher e Notifiche. |
-| **Terminal/Shell** | `kitty`, `zsh`, `neovim` | Terminale, Shell e Editor di codice. |
-| **Strumenti** | `stow`, `jq`, `pamixer`, `playerctl`, `brightnessctl`, `grim`, `slurp`, `swappy` | Utilità essenziali per gli script. |
+These core programs and utilities must be installed :
 
-### 🎨 Estetica (Critico per il Look)
-| Elemento | Nome Esatto | Istruzioni |
-| :--- | :--- | :--- |
-| **Terminal Font** | `FantasqueSansM Nerd Font Mono Bold` | Da installare nel sistema. |
-| **UI/Icon Font** | `JetBrainsMono Nerd Font` | Essenziale per le icone di Waybar/Rofi. |
-| **Tema GTK/Icone** | `Adwaita` (forzato scuro) | Utilizza il tema di default di GNOME. |
+| Package | Description |
+| :--- | :--- |
+| `hyprland` | The main Wayland Window Manager. |
+| `waybar` | The custom status bar. |
+| `kitty` | The terminal emulator used in the setup. |
+| `rofi` | The application launcher. |
+| `swww` | The wallpaper manager (for animated and static backgrounds). |
+| `wlogout` | The graphical power/logout menu. |
+| `swaync` | The Wayland notification center. |
+| `wallust` | The wallpaper-based color scheme generator. |
+| `zsh` | The advanced shell. |
+| `stow` | The tool used for managing dotfile symlinks. |
+| `git` | For cloning this repository. |
+| `unzip` | Extraction utility. |
+| `curl` | Necessary for installing Oh My Zsh. |
+| `fzf` | Command-line fuzzy finder (for Zsh bindings). |
+| `lsd` | Modern replacement for `ls` (for terminal file listings). |
 
----
+### Installation
 
-## 🛠️ Istruzioni di Installazione
+The provided `install.sh` script automates file copying, plugin installation, permission setting, and shell configuration.
 
-Per sincronizzare il sistema, cloniamo il repository e usiamo `stow`.
+Important: The script will require your user password for the final `chsh` command (Change Shell).
 
-### Passo 1: Clonazione e Setup
+#### Step 1: Clone the Repository
+
+Open a terminal and clone the repository into your Home directory:
 
 ```bash
-# 1. Clona il repository nella cartella dotfiles
-git clone [https://github.com/](https://github.com/)[IL TUO NOME UTENTE]/[NOME REPO].git ~/dotfiles
+git clone git@github.com:comitanigiacomo/dotfiles.git
+```
 
-# 2. Vai nella cartella
+#### Step 2: Run the Script
+
+Navigate into the directory, and run the scrypt:
+
+```bash
 cd ~/dotfiles
-
-### Passo 2: Sincronizzazione Completa con stow
-
-Esegui i comandi esattamente come sono stati testati e che hanno risolto tutti i conflitti.
-
-A. Collega Configurazione (.config):
-
-```bash
-
-# Collega tutte le cartelle principali (hypr, rofi, waybar, GTK, ecc.)
-stow -t ~/.config hypr kitty nvim rofi swaync waybar gtk-3.0 gtk-4.0
-
-```
-B. Collega Shell (Zsh):
-
-```bash
-
-# Collega il file .zshrc
-stow -t ~ zsh
-
+chmod +x install.sh
+./install.sh
 ```
 
-### Passo 3: Finalizzazione
+#### Step 3: Finalization (Login)
 
-    Imposta la Shell: chsh -s /usr/bin/zsh
+- When prompted, enter your user password for the final `chsh` command (Change Shell).
 
-    Riavvia: Esegui un logout/login per caricare il nuovo ambiente.
+- Once the script finishes, Log Out of your current session (hyprctl dispatch exit or similar).
+
+- Log In again, making sure to select the Hyprland session
 
