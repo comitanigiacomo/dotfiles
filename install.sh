@@ -5,23 +5,22 @@ DOTFILES_DIR=$HOME/dotfiles
 CONFIG_DIR=$HOME/.config
 
 # --- Elenco Pacchetti Personalizzato (Basato sulla TUA Struttura) ---
-
 # Pacchetti "Piatti" (file subito dentro, come 'rofi' e 'wallust')
 PACKAGES_FLAT="rofi gtk-3.0 gtk-4.0 wallust"
 
 # Pacchetti "Annidati" (file dentro .config/NOME, come 'hypr', 'kitty', 'waybar')
 PACKAGES_NESTED="hypr kitty nvim swaync waybar"
 
-# Pacchetti "Home" (come 'zsh')
+# Pacchetti "Home" (gestiti da STOW)
 PACKAGES_HOME="zsh"
 
 # --- 1. Controllo Essenziale ---
-if ! command -v stow &> /dev/null; then
-    echo "Errore: 'stow' non è installato. Installalo prima di procedere."
-    exit 1
-fi
 if [ ! -d "$DOTFILES_DIR" ]; then
     echo "Errore: La cartella dotfiles non si trova in $DOTFILES_DIR."
+    exit 1
+fi
+if ! command -v stow &> /dev/null; then
+    echo "Errore: 'stow' non è installato (serve per Zsh)."
     exit 1
 fi
 
@@ -33,7 +32,7 @@ function clean_config {
     rm -rf "$CONFIG_DIR/$1"
 }
 
-# Pulizia di tutte le cartelle che verranno gestite da stow
+# Pulizia di tutte le cartelle che verranno gestite
 for pkg in $PACKAGES_FLAT; do
     clean_config "$pkg"
 done
@@ -49,36 +48,40 @@ rm -rf "$HOME/.oh-my-zsh"
 
 echo "Pulizia completata. Le destinazioni sono pronte."
 
-echo -e "\n--- 🛠️ Fase 2: Installazione con STOW (Struttura Mista Personalizzata) ---"
+echo -e "\n--- 🛠️ Fase 2: Installazione (Metodo Copia Manuale) ---"
 
-# 2.1. Installazione Pacchetti Annidati (Hypr, Kitty, ecc.)
-# Questo usa il flag --dir per scavare nel percorso .config interno
-echo "Installazione Pacchetti Annidati (Hypr, Kitty, Waybar...)"
+# 2.1. Installazione Pacchetti Annidati (COPIA MANUALE)
+echo "Installazione Pacchetti Annidati (Copia Manuale: Hypr, Kitty, Waybar...)"
 for pkg in $PACKAGES_NESTED; do
-    echo "-> Installando (annidato) $pkg"
-    # Assumiamo che tutti questi abbiano la struttura 'pacchetto/.config/pacchetto'
-    stow -t "$CONFIG_DIR" --dir "$pkg"/.config "$pkg"
+    echo "-> Copiando (annidato) $pkg"
+    # Crea la cartella di destinazione
+    mkdir -p "$CONFIG_DIR/$pkg"
+    # Copia il contenuto della sottocartella sorgente nella destinazione
+    cp -r "$DOTFILES_DIR/$pkg"/.config/"$pkg"/* "$CONFIG_DIR/$pkg/"
     if [ $? -ne 0 ]; then
-        echo "ERRORE: Installazione $pkg fallita. Controlla la struttura interna."
+        echo "ERRORE: Copia $pkg fallita."
     fi
 done
 
-# 2.2. Installazione Pacchetti Piatti (Rofi, Wallust, ecc.)
-echo "Installazione Pacchetti Piatti (Rofi, Wallust, GTK...)"
-stow -t "$CONFIG_DIR" $PACKAGES_FLAT
-if [ $? -ne 0 ]; then
-    echo "ERRORE: Installazione Pacchetti Piatti fallita."
-fi
+# 2.2. Installazione Pacchetti Piatti (COPIA MANUALE)
+echo "Installazione Pacchetti Piatti (Copia Manuale: Rofi, Wallust, GTK...)"
+for pkg in $PACKAGES_FLAT; do
+    echo "-> Copiando (piatto) $pkg"
+    # Crea la cartella di destinazione
+    mkdir -p "$CONFIG_DIR/$pkg"
+    # Copia il contenuto della cartella sorgente nella destinazione
+    cp -r "$DOTFILES_DIR/$pkg"/* "$CONFIG_DIR/$pkg/"
+    if [ $? -ne 0 ]; then
+        echo "ERRORE: Copia $pkg fallita."
+    fi
+done
 
-# 2.3. Installazione Zsh (Ora senza conflitti)
+# 2.3. Installazione Zsh (STOW - L'unica eccezione)
 echo "Installazione Zsh..."
 stow -t "$HOME" $PACKAGES_HOME
 if [ $? -ne 0 ]; then
     echo "ERRORE: Installazione Zsh fallita."
 fi
-
-# NOTA: La sezione "Risoluzione Manuale (GTK Settings)" è stata rimossa.
-# Non è necessaria perché GTK è ora gestito correttamente da $PACKAGES_FLAT.
 
 echo -e "\n--- 🚀 Fase 3: Post-Installazione e Permessi ---"
 
@@ -89,7 +92,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 
 # 3.2. Correzione Permessi Script
 echo "Impostazione permessi per gli script..."
-# Ora questi percorsi ESISTONO perché la Fase 2.1 ha funzionato
+# Ora questi percorsi ESISTONO perché la Fase 2.1 (Copia) ha funzionato
 chmod +x "$CONFIG_DIR"/hypr/scripts/*
 chmod +x "$CONFIG_DIR"/hypr/UserScripts/*
 chmod +x "$CONFIG_DIR"/hypr/initial-boot.sh
