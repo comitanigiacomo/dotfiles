@@ -5,7 +5,7 @@ DOTFILES_DIR=$HOME/dotfiles
 CONFIG_DIR=$HOME/.config
 
 # --- Elenco Pacchetti Personalizzato (Basato sulla TUA Struttura) ---
-PACKAGES_FLAT="rofi gtk-3.0 gtk-4.0 wallust fontconfig"
+PACKAGES_FLAT="rofi gtk-3.0 gtk-4.0 wallust wlogout fontconfig"
 PACKAGES_NESTED="hypr kitty nvim swaync waybar"
 PACKAGES_HOME="zsh"
 
