@@ -3,10 +3,21 @@
 # --- Variabili di Sistema ---
 DOTFILES_DIR=$HOME/dotfiles
 CONFIG_DIR=$HOME/.config
-STOW_PACKAGES="kitty nvim rofi swaync waybar gtk-3.0 gtk-4.0 wallust"
+
+# --- Elenco Pacchetti Personalizzato (Basato sulla TUA Struttura) ---
+
+# Pacchetti "Piatti" (file subito dentro, come 'rofi' e 'wallust')
+PACKAGES_FLAT="rofi gtk-3.0 gtk-4.0 wallust"
+
+# Pacchetti "Annidati" (file dentro .config/NOME, come 'hypr', 'kitty', 'waybar')
+PACKAGES_NESTED="hypr kitty nvim swaync waybar"
+
+# Pacchetti "Home" (come 'zsh')
+PACKAGES_HOME="zsh"
+
 # --- 1. Controllo Essenziale ---
 if ! command -v stow &> /dev/null; then
-    echo "Errore: 'stow' non è installato. Installalo prima di procedere (es. sudo pacman -S stow)."
+    echo "Errore: 'stow' non è installato. Installalo prima di procedere."
     exit 1
 fi
 if [ ! -d "$DOTFILES_DIR" ]; then
@@ -14,9 +25,8 @@ if [ ! -d "$DOTFILES_DIR" ]; then
     exit 1
 fi
 
-echo "--- 🧹 Fase 1: Pulizia dei Conflitti ---"
-# Rimuove le cartelle locali e i link simbolici esistenti che interferiscono con STOW.
-# Questo previene l'errore 'existing target is not owned'.
+echo "--- 🧹 Fase 1: Pulizia dei Conflitti (Definitiva) ---"
+# Rimuove le cartelle locali E i file di conflitto
 
 function clean_config {
     echo "Pulizia $1..."
@@ -24,45 +34,62 @@ function clean_config {
 }
 
 # Pulizia di tutte le cartelle che verranno gestite da stow
-for pkg in hypr $STOW_PACKAGES; do
+for pkg in $PACKAGES_FLAT; do
     clean_config "$pkg"
 done
-# Pulizia file zsh
+for pkg in $PACKAGES_NESTED; do
+    clean_config "$pkg"
+done
+
+# Pulizia Zsh (INCLUSO .p10k.zsh e .oh-my-zsh che causavano i conflitti)
+echo "Pulizia file Zsh..."
 rm -f "$HOME/.zshrc"
+rm -f "$HOME/.p10k.zsh"
+rm -rf "$HOME/.oh-my-zsh"
 
 echo "Pulizia completata. Le destinazioni sono pronte."
 
-echo -e "\n--- 🛠️ Fase 2: Installazione con STOW ---"
+echo -e "\n--- 🛠️ Fase 2: Installazione con STOW (Struttura Mista Personalizzata) ---"
 
-# 2.1. Installazione Hyprland (La Struttura Complessa)
-echo "Installazione Hyprland (Struttura annidata)..."
-stow -t "$CONFIG_DIR" --dir hypr/.config hypr
+# 2.1. Installazione Pacchetti Annidati (Hypr, Kitty, ecc.)
+# Questo usa il flag --dir per scavare nel percorso .config interno
+echo "Installazione Pacchetti Annidati (Hypr, Kitty, Waybar...)"
+for pkg in $PACKAGES_NESTED; do
+    echo "-> Installando (annidato) $pkg"
+    # Assumiamo che tutti questi abbiano la struttura 'pacchetto/.config/pacchetto'
+    stow -t "$CONFIG_DIR" --dir "$pkg"/.config "$pkg"
+    if [ $? -ne 0 ]; then
+        echo "ERRORE: Installazione $pkg fallita. Controlla la struttura interna."
+    fi
+done
+
+# 2.2. Installazione Pacchetti Piatti (Rofi, Wallust, ecc.)
+echo "Installazione Pacchetti Piatti (Rofi, Wallust, GTK...)"
+stow -t "$CONFIG_DIR" $PACKAGES_FLAT
 if [ $? -ne 0 ]; then
-    echo "ERRORE: Installazione Hyprland fallita. Controlla la struttura di hypr/.config/hypr."
-    exit 1
+    echo "ERRORE: Installazione Pacchetti Piatti fallita."
 fi
 
-# 2.2. Installazione Pacchetti con Struttura Piatta
-echo "Installazione Pacchetti Standard (Kitty, Rofi, Waybar, etc.)..."
-stow -t "$CONFIG_DIR" $STOW_PACKAGES
-stow -t "$HOME" zsh
+# 2.3. Installazione Zsh (Ora senza conflitti)
+echo "Installazione Zsh..."
+stow -t "$HOME" $PACKAGES_HOME
+if [ $? -ne 0 ]; then
+    echo "ERRORE: Installazione Zsh fallita."
+fi
 
-# 2.3. Risoluzione Manuale (GTK Settings)
-# Questi link sono stati creati a mano perché stow ha dato problemi, ma sono essenziali.
-echo "Correzione link GTK settings..."
-ln -s "$DOTFILES_DIR/gtk-3.0/settings.ini" "$CONFIG_DIR/gtk-3.0/settings.ini"
-ln -s "$DOTFILES_DIR/gtk-4.0/settings.ini" "$CONFIG_DIR/gtk-4.0/settings.ini"
+# NOTA: La sezione "Risoluzione Manuale (GTK Settings)" è stata rimossa.
+# Non è necessaria perché GTK è ora gestito correttamente da $PACKAGES_FLAT.
 
 echo -e "\n--- 🚀 Fase 3: Post-Installazione e Permessi ---"
 
-# 3.1. Installazione Zsh Plugin (Oh My Zsh non gestito da stow)
+# 3.1. Installazione Zsh Plugin (Ora funzionerà perché abbiamo pulito .oh-my-zsh)
 echo "Installazione Zsh Plugins e Framework..."
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 # 3.2. Correzione Permessi Script
-# La tua configurazione Hyprland fallisce se gli script non sono eseguibili
 echo "Impostazione permessi per gli script..."
+# Ora questi percorsi ESISTONO perché la Fase 2.1 ha funzionato
 chmod +x "$CONFIG_DIR"/hypr/scripts/*
 chmod +x "$CONFIG_DIR"/hypr/UserScripts/*
 chmod +x "$CONFIG_DIR"/hypr/initial-boot.sh
