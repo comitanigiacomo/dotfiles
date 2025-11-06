@@ -21,6 +21,21 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+ZSH_HIGHLIGHT_STYLES[default]='fg=white'
+
+# 2. Comandi = BLU
+ZSH_HIGHLIGHT_STYLES[command]='fg=14'
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=14'
+ZSH_HIGHLIGHT_STYLES[function]='fg=14'
+
+# 3. Errori (es. path non trovato) = ROSSO SOTTOLINEATO
+ZSH_HIGHLIGHT_STYLES[path_error]='fg=red,underline'
+ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red,underline'
+
+# 4. Argomenti giusti (path, stringhe) = VERDI (come erano prima)
+ZSH_HIGHLIGHT_STYLES[path]='fg=green'
+ZSH_HIGHLIGHT_STYLES[string]='fg=green'
+
 # check the dnf plugins commands here
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/dnf
 
@@ -50,21 +65,6 @@ alias lt='ls --tree'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-ZSH_HIGHLIGHT_STYLES[default]='fg=white'
-
-# 2. Comandi = BLU
-ZSH_HIGHLIGHT_STYLES[command]='fg=14'
-ZSH_HIGHLIGHT_STYLES[builtin]='fg=14'
-ZSH_HIGHLIGHT_STYLES[function]='fg=14'
-
-# 3. Errori (es. path non trovato) = ROSSO SOTTOLINEATO
-ZSH_HIGHLIGHT_STYLES[path_error]='fg=red,underline'
-ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red,underline'
-
-# 4. Argomenti giusti (path, stringhe) = VERDI (come erano prima)
-ZSH_HIGHLIGHT_STYLES[path]='fg=green'
-ZSH_HIGHLIGHT_STYLES[string]='fg=green'
 
 leet() {
     cd ~/personale/leetcode 
