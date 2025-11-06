@@ -6,7 +6,7 @@ CONFIG_DIR=$HOME/.config
 
 # --- Elenco Pacchetti Personalizzato (Basato sulla TUA Struttura) ---
 # Pacchetti "Piatti" (gestiti da COPIA)
-PACKAGES_FLAT="rofi gtk-3.0 gtk-4.0 wallust wlogout"
+PACKAGES_FLAT="rofi gtk-3.0 gtk-4.0 wallust wlogout fontconfig" # Aggiunto fontconfig (se lo hai)
 # Pacchetti "Annidati" (gestiti da COPIA MANUALE)
 PACKAGES_NESTED="hypr kitty nvim swaync waybar"
 # Pacchetti "Home" (gestiti da STOW)
@@ -45,6 +45,10 @@ rm -f "$HOME/.zshrc"
 rm -f "$HOME/.p10k.zsh"
 rm -rf "$HOME/.oh-my-zsh"
 
+# Pulizia font locali
+echo "Pulizia cache font locali..."
+rm -rf "$HOME/.local/share/fonts"
+
 echo "Pulizia completata. Le destinazioni sono pronte."
 
 echo -e "\n--- 🛠️ Fase 2: Installazione (Metodo Copia Manuale) ---"
@@ -70,23 +74,29 @@ echo "Installazione Sfondi (Copia Manuale in ~/.config/hypr/wallpaper)..."
 mkdir -p "$CONFIG_DIR/hypr/wallpaper"
 cp -r "$DOTFILES_DIR"/wallpapers/* "$CONFIG_DIR/hypr/wallpaper/"
 
-echo -e "\n--- 🚀 Fase 3: Post-Installazione Zsh (Ordine Corretto V24) ---"
+# 2.4. Installazione Zsh (STOW - L'unica eccezione)
+echo "Installazione Zsh..."
+stow -t "$HOME" $PACKAGES_HOME
+# (Lo script V24 falliva qui, ma il V25 non dovrebbe più)
+
+# --- NUOVA FASE: INSTALLAZIONE FONT ---
+# 2.5. Installazione Font Locali
+echo "Installazione Font Locali (Nerd Fonts)..."
+mkdir -p "$HOME/.local/share/fonts"
+cp -r "$DOTFILES_DIR"/fonts/* "$HOME/.local/share/fonts/"
+
+echo -e "\n--- 🚀 Fase 3: Post-Installazione e Permessi ---"
 
 # 3.1. Installazione Zsh Plugin (PRIMA di stow)
 echo "Installazione Zsh Plugins e Framework..."
-# Installa Oh My Zsh (questo crea un .zshrc di default)
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/oh-my-zsh/master/tools/install.sh)" "" --unattended
-# Installa i plugin
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 # 3.2. Installazione Zsh (STOW - DOPO i plugin)
 echo "Installazione configurazione Zsh (Stow)..."
-# --- CORREZIONE (V24): Rimuovi il file .zshrc di default creato da Oh My Zsh ---
-rm -f "$HOME/.zshrc" 
-
-# Ora stow installa il TUO .zshrc e il .p10k.zsh senza conflitti
+rm -f "$HOME/.zshrc" # Rimuovi il file .zshrc di default creato da Oh My Zsh
 stow -t "$HOME" $PACKAGES_HOME
 if [ $? -ne 0 ]; then
     echo "ERRORE: Installazione Zsh (Stow) fallita."
@@ -99,7 +109,12 @@ chmod +x "$CONFIG_DIR"/hypr/scripts/*
 chmod +x "$CONFIG_DIR"/hypr/UserScripts/*
 chmod +x "$CONFIG_DIR"/hypr/initial-boot.sh
 
-# 3.4. Imposta Zsh come shell di default
+# --- NUOVA FASE: RICOSTRUZIONE CACHE FONT ---
+# 3.4. Ricostruisci la cache dei font (FC-CACHE)
+echo "Ricostruzione della cache dei font (fc-cache)..."
+fc-cache -f -v
+
+# 3.5. Imposta Zsh come shell di default
 if [ -f /usr/bin/zsh ]; then
     echo "---"
     echo "ATTENZIONE: Lo script ora tenterà di impostare Zsh come shell di default."
