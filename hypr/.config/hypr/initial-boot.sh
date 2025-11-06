@@ -3,7 +3,7 @@
 # --- IMPOSTA IL TUO SFONDO ---
 # Definisci il percorso del tuo sfondo preferito
 # NOTA: Sostituisci questo percorso con un'immagine reale!
-WALLPAPER_PATH="$HOME/.config/hypr/wallpaper/Beach-dark.png
+WALLPAPER_PATH="$HOME/.config/hypr/wallpaper/Beach-Dark.png"
 # --- Avvio di Wallust per i colori del tema ---
 # (Questo ora funzionerà perché gli stiamo dando un file)
 if [ -f "$WALLPAPER_PATH" ]; then
