@@ -76,9 +76,14 @@ echo -e "\n--- 🚀 Fase 3: Post-Installazione Zsh (Ordine Corretto) ---"
 
 # 3.1. Installazione Zsh Plugin (PRIMA di stow)
 echo "Installazione Zsh Plugins e Framework..."
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/oh-my-zsh/master/tools/install.sh)" "" --unattended
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+
+# --- NUOVA CORREZIONE (V28): Installa il plugin Autosuggestions mancante ---
+echo "Installazione Zsh Autosuggestions..."
+git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
 
 # 3.2. Installazione Zsh (STOW - DOPO i plugin)
 echo "Installazione configurazione Zsh (Stow)..."
@@ -95,16 +100,13 @@ chmod +x "$CONFIG_DIR"/hypr/scripts/*
 chmod +x "$CONFIG_DIR"/hypr/UserScripts/*
 chmod +x "$CONFIG_DIR"/hypr/initial-boot.sh
 
-# 3.4. Imposta Zsh come shell di default (L'UNICO MODO POSSIBILE)
+# 3.4. Imposta Zsh come shell di default
 if [ -f /usr/bin/zsh ]; then
     echo "---"
     echo "ATTENZIONE: Lo script ora tenterà di impostare Zsh come shell di default."
     echo "Inserisci la password di '$USER' (la tua password di login) quando richiesta."
     echo "---"
-    
-    # Questo comando chiederà la password interattivamente
     chsh -s /usr/bin/zsh
-    
     if [ $? -ne 0 ]; then
         echo "ERRORE: Cambio shell fallito. Eseguilo manualmente: chsh -s /usr/bin/zsh"
     fi
@@ -115,6 +117,5 @@ fi
 echo -e "\n✅ Installazione completata! Verificare l'ambiente:"
 echo "   1. Riavvia la sessione (Logout e Login)."
 echo "   2. Controlla che Hyprland, Waybar e Rofi siano caricati correttamente."
-echo "   3. (Ora puoi avviare 'exec zsh' per vedere il risultato immediato)"
 
 # fine dello script
