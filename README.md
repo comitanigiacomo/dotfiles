@@ -1,6 +1,10 @@
 # Hyprland Dotfiles
 
-This repository contains my personal configuration files for the **Hyprland** Wayland compositor, tailored for Fedora/Arch Linux distributions. The setup includes custom themes for Waybar, Rofi, Kitty, and Zsh (with Powerlevel10k).
+This repository contains my personal configuration files for the **Hyprland** Wayland compositor. The setup includes custom themes for Waybar, Rofi, Kitty, and Zsh (with Powerlevel10k).
+
+This configuration was born from the desire to create an environment that is clean, highly **functional**, and aesthetically pleasing. The choice of **Hyprland** was primarily driven by its ability to offer sophisticated graphical features, like the  **transparency (blur and opacity)**
+
+***Crucially, the main objective behind this project was to create a configuration that could be easily and reliably recreated on another machine in case of necessity***.
 
 The installation is designed to run successfully on a **clean base system of hyperland**
 
@@ -23,7 +27,7 @@ These core programs and utilities must be installed :
 | `swaync` | The Wayland notification center. |
 | `wallust` | The wallpaper-based color scheme generator. |
 | `zsh` | The advanced shell. |
-| `stow` | The tool used for managing dotfile symlinks. |
+| `stow` | The tool used for managing Zsh dotfile symlinks. |
 | `git` | For cloning this repository. |
 | `unzip` | Extraction utility. |
 | `curl` | Necessary for installing Oh My Zsh. |
@@ -63,3 +67,30 @@ chmod +x install.sh
 
 - Log In again, making sure to select the Hyprland session
 
+## Repository Structure:
+
+This section provides an overview of the main directories that will be used by `stow` to create symlinks in your `$HOME` directory, along with an explanation of their function:
+
+| Element | Type | Description |
+| :--- | :--- | :--- |
+| **`hypr`** | Directory | Contains the main configuration files for the **Hyprland** Wayland compositor (e.g., `hyprland.conf`), defining *keybinds, window layouts, and graphical effects*. |
+| **`waybar`** | Directory | Configurations (CSS and JSON) for the **Waybar** (status bar), defining its *appearance, modules, and displayed information*. |
+| **`rofi`** | Directory | Themes and configurations for **Rofi**, the *application launcher* and menu, customizing its look and usage modes. |
+| **`kitty`** | Directory | Configuration files for the **Kitty** terminal emulator. Includes *themes, fonts, and specific terminal settings*. |
+| **`zsh`** | Directory | Contains the configuration files for the **Zsh** shell (e.g., `.zshrc`) and the **Powerlevel10k** prompt settings. |
+| **`swaync`** | Directory | Configuration for the **Sway Notification Center**, managing the *appearance and behavior* of system notifications. |
+| **`wlogout`** | Directory | Contains the configuration files (CSS and layout) for the **wlogout** *graphical power/logout menu*. |
+| **`wallust`** | Directory | Contains scripts and templates for **Wallust**, the tool that *extracts colors from the wallpaper* to apply them system-wide. |
+| **`gtk-3.0`** | Directory | Configuration files for the look of **GTK3** applications (themes and settings), ensuring visual consistency. |
+| **`gtk-4.0`** | Directory | Configuration files for the look of **GTK4** applications. |
+| **`wallpapers`** | Directory | The image files used as backgrounds, managed by `swww`. |
+| **`fonts`** | Directory | Contains custom fonts (e.g., Nerd Fonts) that are *essential for the correct display of icons and symbols* in the terminal and Waybar. |
+| **`install.sh`** | Script | The **main installation script**. It automates file copying, Oh My Zsh installation, and initial configurations. |
+| **`nvim`** | Directory | Configuration for **NeoVim**, the text editor (if included in your setup). |
+
+
+![alt text](image-5.png)
+
+![alt text](image-4.png)
+
+![alt text](image-3.png)
