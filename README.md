@@ -94,3 +94,7 @@ This section provides an overview of the main directories that will be used by `
 ![alt text](image-4.png)
 
 ![alt text](image-3.png)
+
+### Credits 
+
+This configuration is heavily inspired by and uses structure elements from [JaKooLit's Hyprland dotfiles](https://github.com/JaKooLit/Hyprland-Dots), which served as an excellent functional base for this project.
