@@ -2,7 +2,7 @@
 
 This repository contains my personal configuration files for the **Hyprland** Wayland compositor, tailored for Fedora/Arch Linux distributions. The setup includes custom themes for Waybar, Rofi, Kitty, and Zsh (with Powerlevel10k).
 
-The installation is designed to run successfully on a **clean base system of hyperland
+The installation is designed to run successfully on a **clean base system of hyperland**
 
 ## Prerequisites
 
@@ -34,7 +34,7 @@ These core programs and utilities must be installed :
 
 The provided `install.sh` script automates file copying, plugin installation, permission setting, and shell configuration.
 
-Important: The script will require your user password for the final `chsh` command (Change Shell).
+#important[ The script will require your user password for the final `chsh` command (Change Shell).]
 
 #### Step 1: Clone the Repository
 
