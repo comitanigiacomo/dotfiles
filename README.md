@@ -34,7 +34,8 @@ These core programs and utilities must be installed :
 
 The provided `install.sh` script automates file copying, plugin installation, permission setting, and shell configuration.
 
-#important[ The script will require your user password for the final `chsh` command (Change Shell).]
+> [!CAUTION]
+> The script will require your user password for the final `chsh` command (Change Shell).
 
 #### Step 1: Clone the Repository
 
