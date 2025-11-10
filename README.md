@@ -91,7 +91,7 @@ This section provides an overview of the main directories that will be used by `
 
 ![alt text](/images/Pictures/image-1.png)
 
-![alt text](/images/Pictires/image-2.png)
+![alt text](/images/Pictures/image-2.png)
 
 ![alt text](/images/Pictures/image-3.png)
 
