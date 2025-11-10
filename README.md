@@ -6,7 +6,11 @@ This configuration was born from the desire to create an environment that is cle
 
 ***Crucially, the main objective behind this project was to create a configuration that could be easily and reliably recreated on another machine in case of necessity***.
 
-The installation is designed to run successfully on a **clean base system of hyperland**
+## Target System (Base Installation)
+
+[!IMPORTANT] This configuration is designed to be applied on top of a minimal, functioning Hyprland installation.
+
+The script does not install Hyprland itself, Wayland, or a display manager (like SDDM or Greetd). It assumes you are starting from an OS (like Arch Linux, Fedora, etc.) where you can already log in to a base Hyprland session.
 
 ## Prerequisites
 
@@ -36,14 +40,18 @@ These core programs and utilities must be installed :
 
 ### Installation
 
-The provided `install.sh` script automates file copying, plugin installation, permission setting, and shell configuration.
+The `install.sh` script automates the entire setup process. It is designed to be safe and robust, performing three main actions:
+
+1.  **Backs Up:** Automatically finds existing configurations (like `~/.config/hypr`, `~/.zshrc`, etc.) and moves them to a dated backup folder (`~/.config_backup_...`).
+2.  **Installs Dependencies:** Installs external plugins like Oh My Zsh and its required plugins.
+3.  **Symlinks (Stow):** Uses `stow` to create symlinks for **all** configuration packages in this repository, linking them to their correct locations on the system.
 
 > [!CAUTION]
-> The script will require your user password for the final `chsh` command (Change Shell).
+> This script will **move** any existing configurations it finds to a backup directory. It does **not** copy files; it creates **symlinks**. This means any change you make to a config file (e.g., `~/.config/hypr/hyprland.conf`) will instantly modify the file within this `dotfiles` repository.
 
 #### Step 1: Clone the Repository
 
-Open a terminal and clone the repository into your Home directory:
+Open a terminal and clone the repository into your `Home` directory:
 
 ```bash
 git clone git@github.com:comitanigiacomo/dotfiles.git
@@ -59,35 +67,33 @@ chmod +x install.sh
 ./install.sh
 ```
 
+The script will guide you through the process. When prompted, enter your user password for the final `chsh` command (to set Zsh as your default shell).
+
 #### Step 3: Finalization (Login)
 
-- When prompted, enter your user password for the final `chsh` command (Change Shell).
+Once the script finishes, Log out of your current session and Log in again. This is necessary for all changes (especially the zsh shell and new system fonts) to take effect
 
-- Once the script finishes, Log Out of your current session (hyprctl dispatch exit or similar).
+## Repository Structure
 
-- Log In again, making sure to select the Hyprland session
+This repository uses `stow` to manage packages. Each directory is a "package" that contains the configuration files nested in the path they will be linked to.
 
-## Repository Structure:
-
-This section provides an overview of the main directories that will be used by `stow` to create symlinks in your `$HOME` directory, along with an explanation of their function:
-
-| Element | Type | Description |
+| Package | Target Directory | Description |
 | :--- | :--- | :--- |
-| **`hypr`** | Directory | Contains the main configuration files for the **Hyprland** Wayland compositor (e.g., `hyprland.conf`), defining *keybinds, window layouts, and graphical effects*. |
-| **`waybar`** | Directory | Configurations (CSS and JSON) for the **Waybar** (status bar), defining its *appearance, modules, and displayed information*. |
-| **`rofi`** | Directory | Themes and configurations for **Rofi**, the *application launcher* and menu, customizing its look and usage modes. |
-| **`kitty`** | Directory | Configuration files for the **Kitty** terminal emulator. Includes *themes, fonts, and specific terminal settings*. |
-| **`zsh`** | Directory | Contains the configuration files for the **Zsh** shell (e.g., `.zshrc`) and the **Powerlevel10k** prompt settings. |
-| **`swaync`** | Directory | Configuration for the **Sway Notification Center**, managing the *appearance and behavior* of system notifications. |
-| **`wlogout`** | Directory | Contains the configuration files (CSS and layout) for the **wlogout** *graphical power/logout menu*. |
-| **`wallust`** | Directory | Contains scripts and templates for **Wallust**, the tool that *extracts colors from the wallpaper* to apply them system-wide. |
-| **`gtk-3.0`** | Directory | Configuration files for the look of **GTK3** applications (themes and settings), ensuring visual consistency. |
-| **`gtk-4.0`** | Directory | Configuration files for the look of **GTK4** applications. |
-| **`wallpapers`** | Directory | The image files used as backgrounds, managed by `swww`. |
-| **`fonts`** | Directory | Contains custom fonts (e.g., Nerd Fonts) that are *essential for the correct display of icons and symbols* in the terminal and Waybar. |
-| **`install.sh`** | Script | The **main installation script**. It automates file copying, Oh My Zsh installation, and initial configurations. |
-| **`nvim`** | Directory | Configuration for **NeoVim**, the text editor (if included in your setup). |
-
+| **`hypr`** | `~/.config/hypr` | Contains the main Hyprland configuration files (`hyprland.conf`), keybinds, window rules, etc. |
+| **`waybar`** | `~/.config/waybar` | Configurations (CSS and JSON) for the Waybar status bar. |
+| **`rofi`** | `~/.config/rofi` | Themes and configurations for Rofi, the application launcher. |
+| **`kitty`** | `~/.config/kitty` | Configuration files for the Kitty terminal emulator. |
+| **`zsh`** | `~/` | Contains the `.zshrc` file and Powerlevel10k prompt settings. |
+| **`swaync`** | `~/.config/swaync` | Configuration for the Sway Notification Center. |
+| **`wlogout`** | `~/.config/wlogout` | CSS and layout files for the wlogout power menu. |
+| **`wallust`** | `~/.config/wallust` | Templates for Wallust (wallpaper color generator). Also provides themes for other apps. |
+| **`gtk-3.0`** | `~/.config/gtk-3.0` | Configuration files for the look of GTK3 applications. |
+| **`gtk-4.0`** | `~/.config/gtk-4.0` | Configuration files for the look of GTK4 applications. |
+| **`wallpapers`** | `~/Pictures/Wallpapers` | Wallpaper files managed by `swww`. |
+| **`images`** | `~/Pictures` | Static images (like screenshots) used in this README. |
+| **`fonts`** | `~/.local/share/fonts` | Custom fonts (Nerd Fonts) essential for icons. |
+| **`nvim`** | `~/.config/nvim` | Configuration for NeoVim. |
+| **`install.sh`** | (N/A) | The **main installation script**. It automates backups, plugin installation, and symlinking all packages via `stow`. |
 
 ![alt text](images/Pictures/image-1.png)
 
