@@ -89,11 +89,11 @@ This section provides an overview of the main directories that will be used by `
 | **`nvim`** | Directory | Configuration for **NeoVim**, the text editor (if included in your setup). |
 
 
-![alt text](/images/image-1.png)
+![alt text](/images/Pictures/image-1.png)
 
-![alt text](/images/image-2.png)
+![alt text](/images/Pictires/image-2.png)
 
-![alt text](/images/image-3.png)
+![alt text](/images/Pictures/image-3.png)
 
 ### Credits 
 
