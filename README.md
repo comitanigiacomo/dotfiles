@@ -8,7 +8,8 @@ This configuration was born from the desire to create an environment that is cle
 
 ## Target System (Base Installation)
 
-[!IMPORTANT] This configuration is designed to be applied on top of a minimal, functioning Hyprland installation.
+> [!CAUTION]
+> This configuration is designed to be applied on top of a minimal, functioning Hyprland installation.
 
 The script does not install Hyprland itself, Wayland, or a display manager (like SDDM or Greetd). It assumes you are starting from an OS (like Arch Linux, Fedora, etc.) where you can already log in to a base Hyprland session.
 
