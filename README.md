@@ -27,7 +27,7 @@ These core programs and utilities must be installed :
 | `swaync` | The Wayland notification center. |
 | `wallust` | The wallpaper-based color scheme generator. |
 | `zsh` | The advanced shell. |
-| `stow` | The tool used for managing Zsh dotfile symlinks. |
+| `stow` | The core tool used to manage and symlink all configuration files. |
 | `git` | For cloning this repository. |
 | `unzip` | Extraction utility. |
 | `curl` | Necessary for installing Oh My Zsh. |
@@ -89,11 +89,11 @@ This section provides an overview of the main directories that will be used by `
 | **`nvim`** | Directory | Configuration for **NeoVim**, the text editor (if included in your setup). |
 
 
-![alt text](/images/Pictures/image-1.png)
+![alt text](images/Pictures/image-1.png)
 
-![alt text](/images/Pictures/image-2.png)
+![alt text](images/Pictures/image-2.png)
 
-![alt text](/images/Pictures/image-3.png)
+![alt text](images/Pictures/image-3.png)
 
 ### Credits 
 
