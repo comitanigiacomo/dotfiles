@@ -5,24 +5,21 @@ window {
     font-family: Cantarell, sans-serif;
 }
 
-/* Contenitore principale */
 grid {
-    margin: 40px; /* bordo esterno */
-    /* spacing non valido → lo sostituiamo con margin nei bottoni */
+    margin: 40px; 
 }
 
-/* Pulsanti */
 button {
     background-repeat: no-repeat;
     background-position: center 40%;
-    background-size: 70px; /* dimensione icona */
+    background-size: 70px; 
     border-radius: 16px;
     background-color: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 20px 10px;
     min-width: 120px;
     min-height: 140px;
-    margin: 20px; /* distanza tra i pulsanti */
+    margin: 20px; 
     transition: 150ms ease-in-out;
 }
 
@@ -30,14 +27,12 @@ button:hover {
     background-color: rgba(255, 255, 255, 0.15);
 }
 
-/* Testo sotto icona */
 button label, button span {
     margin-top: 80px;
     font-size: 1.8em;
     color: rgba(255, 255, 255, 0.9);
 }
 
-/* Icone */
 #lock {
     background-image: image(url("./icons/lock.png"));
 }
