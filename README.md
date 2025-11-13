@@ -102,6 +102,8 @@ This repository uses `stow` to manage packages. Each directory is a "package" th
 
 ![alt text](images/Pictures/image-3.png)
 
+![alt text](images/Pictures/image-4.png)
+
 ### Credits 
 
 This configuration is heavily inspired by and uses structure elements from [JaKooLit's Hyprland dotfiles](https://github.com/JaKooLit/Hyprland-Dots), which served as an excellent functional base for this project.
