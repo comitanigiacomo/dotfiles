@@ -38,6 +38,7 @@ These core programs and utilities must be installed :
 | `curl` | Necessary for installing Oh My Zsh. |
 | `fzf` | Command-line fuzzy finder (for Zsh bindings). |
 | `lsd` | Modern replacement for `ls` (for terminal file listings). |
+| `fastfetch` | System information tool (displayed in terminal) |
 
 ### Installation
 
@@ -94,6 +95,7 @@ This repository uses `stow` to manage packages. Each directory is a "package" th
 | **`images`** | `~/Pictures` | Static images (like screenshots) used in this README. |
 | **`fonts`** | `~/.local/share/fonts` | Custom fonts (Nerd Fonts) essential for icons. |
 | **`nvim`** | `~/.config/nvim` | Configuration for NeoVim. |
+| **`fastfetch`** | `~/.config/fastfetch` | Configuration for Fastfetch system info tool |
 | **`install.sh`** | (N/A) | The **main installation script**. It automates backups, plugin installation, and symlinking all packages via `stow`. |
 
 ![alt text](images/Pictures/image-1.png)
@@ -106,4 +108,6 @@ This repository uses `stow` to manage packages. Each directory is a "package" th
 
 ### Credits 
 
-This configuration is heavily inspired by and uses structure elements from [JaKooLit's Hyprland dotfiles](https://github.com/JaKooLit/Hyprland-Dots), which served as an excellent functional base for this project.
+- Inspired by [JaKooLit's Hyprland dotfiles](https://github.com/JaKooLit/Hyprland-Dots) which gave me a solid functional and structural base.
+
+- The Fastfetch configuration is adapted from templates by [souravas/fastfetch](https://github.com/souravas/fastfetch)
