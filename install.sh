@@ -4,7 +4,7 @@
 DOTFILES_DIR=$HOME/dotfiles
 BACKUP_DIR=$HOME/.config_backup_$(date +%Y%m%d_%H%M%S)
 
-STOW_PACKAGES="fonts gtk-3.0 gtk-4.0 hypr images kitty nvim rofi swaync wallust wallpapers waybar wlogout zsh"
+STOW_PACKAGES="fastfetch fonts gtk-3.0 gtk-4.0 hypr images kitty nvim rofi swaync wallust wallpapers waybar wlogout zsh"
 
 # --- Backup Function ---
 backup() {
@@ -43,7 +43,9 @@ backup "$HOME/.config/wallust"
 backup "$HOME/.config/gtk-3.0"
 backup "$HOME/.config/gtk-4.0"
 backup "$HOME/.local/share/fonts"
-backup "$HOME/Pictures"           
+backup "$HOME/Pictures"
+backup "$HOME/.config/fastfetch"
+backup "$HOME/.local/share/fastfetch"         
 backup "$HOME/.zshrc"
 backup "$HOME/.p10k.zsh"
 backup "$HOME/.oh-my-zsh"
