@@ -1,11 +1,10 @@
-@define-color bg rgba(30, 30, 30, 0.85);        /* Sfondo principale semi-trasparente */
-@define-color bg-solid rgba(35, 35, 35, 0.95);  /* Cards / pannelli */
-@define-color border rgba(255, 255, 255, 0.08); /* Bordi sottili */
+@define-color bg rgba(30, 30, 30, 0.85);        
+@define-color bg-solid rgba(35, 35, 35, 0.95);  
+@define-color border rgba(255, 255, 255, 0.08); 
 @define-color text #ffffff;
-@define-color accent #4a90ff;                  /* Blu GNOME */
+@define-color accent #4a90ff;
 
-/* ---------------- FONT ---------------- */
-* {
+{
     font-family: Cantarell, "Noto Sans", sans-serif;
     font-size: 1rem;
 }
