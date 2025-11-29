@@ -113,3 +113,5 @@ This repository uses `stow` to manage packages. Each directory is a "package" th
 - Inspired by [JaKooLit's Hyprland dotfiles](https://github.com/JaKooLit/Hyprland-Dots) which gave me a solid functional and structural base.
 
 - The Fastfetch configuration is adapted from templates by [souravas/fastfetch](https://github.com/souravas/fastfetch)
+
+- The hyprlock configuration is a combination of various templates by [MrVivekRajan](https://github.com/MrVivekRajan/Hyprlock-Styles) and [mahaveergurjar](https://github.com/mahaveergurjar/Hyprlock-Dots)
