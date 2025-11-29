@@ -98,13 +98,15 @@ This repository uses `stow` to manage packages. Each directory is a "package" th
 | **`fastfetch`** | `~/.config/fastfetch` | Configuration for Fastfetch system info tool |
 | **`install.sh`** | (N/A) | The **main installation script**. It automates backups, plugin installation, and symlinking all packages via `stow`. |
 
-![alt text](images/Pictures/image-1.png)
+![alt text](images/Pictures/lockscreen.png)
 
-![alt text](images/Pictures/image-2.png)
+![alt text](images/Pictures/home.png)
 
-![alt text](images/Pictures/image-3.png)
+![alt text](images/Pictures/prog.png)
 
-![alt text](images/Pictures/image-4.png)
+![alt text](images/Pictures/apps.png)
+
+![alt text](images/Pictures/wlogout.png)
 
 ### Credits 
 
