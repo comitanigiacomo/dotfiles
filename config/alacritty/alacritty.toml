@@ -1,0 +1,52 @@
+[terminal.shell]
+# Questa è la sintassi corretta per le versioni recenti di Alacritty
+program = "/bin/zsh"
+
+[window]
+# Minimalismo estremo: nessuna barra superiore e nessun bordo
+decorations = "none"
+# Opacità leggermente ridotta per profondità (1.0 per nero totale)
+opacity = 1
+# Spazio tra il testo e i bordi della finestra
+padding = { x = 12, y = 12 }
+
+startup_mode = "Windowed"
+
+[window.dimensions]
+columns = 100
+lines = 30
+
+[font]
+# Font classico di sistema, massima leggibilità e zero lag
+normal = { family = "monospace", style = "Regular" }
+size = 12.0
+
+[colors.primary]
+# Palette originale del terminale Fedora/GNOME
+background = '#1e1e1e'
+foreground = '#ffffff'
+
+[colors.normal]
+black   = '#171421'
+red     = '#c01c28'
+green   = '#26a269'
+yellow  = '#a2734c'
+blue    = '#12488b'
+magenta = '#a347ba'
+cyan    = '#2aa1b3'
+white   = '#e5e5e5'
+
+[colors.bright]
+black   = '#5e5c64'
+red     = '#f66151'
+green   = '#33da7a'
+yellow  = '#e9ad0c'
+blue    = '#2a7bde'
+magenta = '#c061cb'
+cyan    = '#33c7de'
+white   = '#ffffff'
+
+[cursor]
+# Cursore a blocco classico
+style = "Block"
+unfocused_hollow = true

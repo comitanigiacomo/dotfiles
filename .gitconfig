@@ -1,0 +1,7 @@
+[user]
+	name = GiacomoComitani
+	email = giacomo.comitani@studenti.unimi.it
+[credential]
+	helper = cache
+[core]
+	autocrlf = input

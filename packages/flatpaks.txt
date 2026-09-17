@@ -1,0 +1,14 @@
+app.zen_browser.zen
+com.bitwarden.desktop
+com.github.scrivanolabs.scrivano
+com.google.AndroidStudio
+com.mattjakeman.ExtensionManager
+com.rtosta.zapzap
+io.dbeaver.DBeaverCommunity
+io.github.brunofin.Cohesion
+md.obsidian.Obsidian
+org.blender.Blender
+org.gimp.GIMP
+org.prismlauncher.PrismLauncher
+org.telegram.desktop
+rest.insomnia.Insomnia
