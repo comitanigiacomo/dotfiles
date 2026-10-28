@@ -1,0 +1,6 @@
+just-perfection-desktop@just-perfection
+quicklaunch@comitanigiacomo.github.com
+workspaces-by-open-apps@favo02.github.com
+tailscale-status@maxgallup.github.com
+blur-my-shell@aunetx
+pop-shell@system76.com

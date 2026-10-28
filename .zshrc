@@ -184,3 +184,6 @@ inject-skills() {
 
 # Added by Antigravity CLI installer
 export PATH="/home/jack/.local/bin:$PATH"
+
+# opencode
+export PATH=/home/jack/.opencode/bin:$PATH

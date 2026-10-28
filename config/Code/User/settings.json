@@ -22,5 +22,6 @@
     },
     "[dockercompose]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "editor.inlayHints.enabled": "offUnlessPressed"
 }
