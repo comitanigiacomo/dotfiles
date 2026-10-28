@@ -49,7 +49,7 @@ fi
 export RESTIC_PASSWORD
 
 log "Verifico il repository"
-restic snapshots --last 1 || die "Repository o password non validi"
+restic cat config >/dev/null || die "Repository o password non validi"
 
 log "Ripristino l'ultimo snapshot in $HOME"
 warn "I file gia' presenti con lo stesso nome verranno sovrascritti."
@@ -58,15 +58,12 @@ restic restore latest --target / --verify
 log "Home ripristinata"
 
 # Il file password e' volutamente escluso dal backup: lo ricreo ora
-# cosi' il timer di backup automatico funziona subito su questo PC.
+# cosi' il comando 'backup-now' funziona subito su questo PC.
 if [ -d "$HOME/.config/backup" ]; then
     printf '%s' "$RESTIC_PASSWORD" > "$HOME/.config/backup/restic-password"
     chmod 600 "$HOME/.config/backup/restic-password"
     log "Password salvata in ~/.config/backup/restic-password"
 fi
 
-systemctl --user daemon-reload 2>/dev/null || true
-systemctl --user enable backup-home.timer 2>/dev/null || warn "Timer di backup non abilitato: fallo a mano"
-$SUDO loginctl enable-linger "$TARGET_USER" 2>/dev/null || warn "Esegui: sudo loginctl enable-linger $TARGET_USER"
-
 warn "Riapri la sessione: shell, chiavi e configurazioni sono quelle del backup."
+warn "Backup: non ci sono timer. Lancialo a mano con 'backup-now' (una volta al mese)."

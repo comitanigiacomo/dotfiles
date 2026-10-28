@@ -29,14 +29,15 @@ sudo reboot
 Dopo il login:
 
 ```bash
-sudo tailscale up              # se non e' partito prima
-sudo loginctl enable-linger jack   # timer di backup attivi anche a sessione chiusa
-systemctl --user list-timers   # deve comparire backup-home.timer
+sudo tailscale up        # se non e' partito prima
 ```
 
 In `40-restore-home.sh` la password restic viene riscritta in
-`~/.config/backup/restic-password`, quindi il backup automatico riparte
-senza altri passaggi.
+`~/.config/backup/restic-password`, quindi il comando `backup-now`
+funziona subito senza altri passaggi.
+
+Non ci sono timer ne' servizi di backup: il backup si lancia **a mano**,
+una volta al mese, con `backup-now`.
 
 ## Cosa fa ogni script
 
@@ -45,7 +46,7 @@ senza altri passaggi.
 | `10-repos.sh` | RPM Fusion, VS Code, Chrome, Tailscale, mise, Adoptium, Antigravity, COPR |
 | `20-packages.sh` | reinstalla i ~570 rpm di `packages/dnf-packages.txt` |
 | `30-flatpaks.sh` | Flathub + le 14 app Flatpak |
-| `40-restore-home.sh` | crea la chiave SSH, la autorizza sul server, `restic restore latest` |
+| `40-restore-home.sh` | crea la chiave SSH, la autorizza sul server, `restic restore latest`, ricrea il file password |
 | `50-shell.sh` | zsh, oh-my-zsh, powerlevel10k, plugin, font, shell di login |
 | `60-desktop.sh` | `dconf load` + installazione estensioni GNOME |
 | `70-apps.sh` | Docker, Tailscale, estensioni VS Code, `mise install` |
@@ -58,13 +59,13 @@ Ogni script è idempotente: si può rilanciare singolarmente.
 - **Configurazioni e liste** → questo repo GitHub
 - **File personali e config nascoste** → repo restic sul server:
   `sftp:server:/home/jack-server/backups/restic-laptop`
-- **Retention**: 7 giornalieri, 4 settimanali, 6 mensili
-- **Backup automatico**: timer systemd utente, ogni giorno alle 03:30
+- **Retention**: 7 giornalieri, 4 settimanali, 6 mensili (calcolata sugli snapshot esistenti)
+- **Backup**: nessun timer. Si lancia a mano con `backup-now`, una volta al mese
 
 Contenuto del backup restic:
 
 ```
-~/projects  ~/Documents  ~/Pictures  ~/personale
+~/projects  ~/Documents  ~/personale
 ~/.zshrc ~/.p10k.zsh ~/.zsh_history ~/.bashrc ~/.bash_profile ~/.gitconfig
 ~/.ssh  ~/.gnupg  ~/.mozilla  ~/.jdks  ~/.texlive2026
 ~/.local/bin  ~/.local/share/fonts  ~/.local/share/keyrings
