@@ -25,7 +25,7 @@ dconf dump / > gnome/gnome-settings.ini
 # 4. Liste software
 mkdir -p packages
 dnf repoquery --userinstalled --qf '%{name}\n' 2>/dev/null | sort -u > packages/dnf-packages.txt || true
-dnf repolist --enabled --qf '%{repoid}\n' 2>/dev/null | sort -u > packages/dnf-repos.txt || true
+dnf repolist --enabled 2>/dev/null | awk 'NR>1 && NF {print $1}' | sort -u > packages/dnf-repos.txt || true
 flatpak list --app --columns=application > packages/flatpaks.txt || true
 flatpak list --runtime --columns=application,branch 2>/dev/null | sort -u > packages/flatpak-runtimes.txt || true
 gnome-extensions list --enabled 2>/dev/null > packages/gnome-extensions.txt || true

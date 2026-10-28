@@ -1,0 +1,13 @@
+adoptium-temurin-java-repository
+antigravity-rpm
+code
+copr:copr.fedorainfracloud.org:atim:lazygit
+copr:copr.fedorainfracloud.org:phracek:PyCharm
+fedora
+fedora-cisco-openh264
+google-chrome
+mise
+rpmfusion-nonfree-nvidia-driver
+rpmfusion-nonfree-steam
+tailscale-stable
+updates
