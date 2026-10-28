@@ -29,8 +29,14 @@ sudo reboot
 Dopo il login:
 
 ```bash
-sudo tailscale up        # se non e' partito prima
+sudo tailscale up              # se non e' partito prima
+sudo loginctl enable-linger jack   # timer di backup attivi anche a sessione chiusa
+systemctl --user list-timers   # deve comparire backup-home.timer
 ```
+
+In `40-restore-home.sh` la password restic viene riscritta in
+`~/.config/backup/restic-password`, quindi il backup automatico riparte
+senza altri passaggi.
 
 ## Cosa fa ogni script
 
