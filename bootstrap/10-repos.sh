@@ -1,28 +1,22 @@
 #!/usr/bin/env bash
-# Aggiunge i repository di terze parti usati su questo sistema.
-# Idempotente: si puo' rilanciare.
 source "$(dirname "$0")/00-common.sh"
 
-log "Repository di terze parti"
+log "repository di terze parti"
 $SUDO dnf -y install dnf-plugins-core curl
 
 FEDORA="$(rpm -E %fedora)"
 
-write_repo() {  # $1 = nome file, stdin = contenuto
+write_repo() {
     $SUDO tee "/etc/yum.repos.d/$1.repo" >/dev/null
     $SUDO chmod 644 "/etc/yum.repos.d/$1.repo"
 }
 
-# --- RPM Fusion (free + nonfree) ---
 if ! rpm -q rpmfusion-free-release >/dev/null 2>&1; then
     $SUDO dnf -y install \
         "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA}.noarch.rpm" \
         "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA}.noarch.rpm"
-else
-    warn "RPM Fusion gia' presente"
 fi
 
-# --- VS Code ---
 $SUDO rpm --import https://packages.microsoft.com/keys/microsoft.asc || true
 write_repo vscode <<'EOF'
 [code]
@@ -35,7 +29,6 @@ gpgcheck=1
 gpgkey=https://packages.microsoft.com/keys/microsoft.asc
 EOF
 
-# --- Google Chrome ---
 $SUDO rpm --import https://dl.google.com/linux/linux_signing_key.pub || true
 write_repo google-chrome <<'EOF'
 [google-chrome]
@@ -46,7 +39,6 @@ gpgcheck=1
 gpgkey=https://dl.google.com/linux/linux_signing_key.pub
 EOF
 
-# --- Tailscale ---
 write_repo tailscale <<'EOF'
 [tailscale-stable]
 name=Tailscale stable
@@ -58,7 +50,6 @@ repo_gpgcheck=0
 gpgkey=https://pkgs.tailscale.com/stable/fedora/repo.gpg
 EOF
 
-# --- mise ---
 write_repo mise <<'EOF'
 [mise]
 name=mise
@@ -68,7 +59,6 @@ gpgcheck=1
 gpgkey=https://mise.jdx.dev/gpg-key.pub
 EOF
 
-# --- Adoptium (Temurin JDK) ---
 $SUDO rpm --import https://packages.adoptium.net/artifactory/api/gpg/key/public || true
 write_repo adoptium-temurin-java-repository <<'EOF'
 [adoptium-temurin-java-repository]
@@ -79,7 +69,6 @@ gpgcheck=1
 gpgkey=https://packages.adoptium.net/artifactory/api/gpg/key/public
 EOF
 
-# --- Antigravity ---
 write_repo antigravity <<'EOF'
 [antigravity-rpm]
 name=Antigravity RPM Repository
@@ -88,10 +77,5 @@ enabled=1
 gpgcheck=0
 EOF
 
-# --- COPR ---
 $SUDO dnf -y copr enable atim/lazygit phracek/PyCharm || warn "COPR non abilitati"
-
-log "Aggiorno i metadati"
 $SUDO dnf -y makecache || true
-
-log "Repository pronti"

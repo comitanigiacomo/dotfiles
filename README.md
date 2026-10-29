@@ -1,35 +1,28 @@
-# Fedora Dotfiles
+# dotfiles
 
-Personal configuration files and automation scripts for Fedora Workstation (GNOME).
+Configurazione di Fedora Workstation: dotfiles, liste pacchetti, script di ripristino.
 
-## Environment
-- **OS**: Fedora Workstation
-- **Shell**: Zsh (Oh-My-Zsh, Powerlevel10k)
-- **Editor**: VS Code, Neovim
-- **Desktop**: GNOME (Pop-shell, Tiling-assistant)
+## Installazione
 
-## Installation
-
-To restore this configuration on a fresh Fedora installation:
+Su un PC nuovo:
 
 ```bash
-mkdir -p ~/projects
 git clone https://github.com/comitanigiacomo/dotfiles.git ~/projects/dotfiles
 cd ~/projects/dotfiles
-chmod +x install-dotfiles.sh
-./install-dotfiles.sh
+bash bootstrap/restore-all.sh
 ```
 
-Reboot the system after the script completes to apply GNOME settings.
+Serve la password `restic laptop` da Bitwarden. Dettagli in [docs/laptop.md](docs/laptop.md).
 
-## Updating
-
-To sync current local configurations back to this repository:
+## Aggiornamento
 
 ```bash
 cd ~/projects/dotfiles
 ./backup-dotfiles.sh
-git add .
-git commit -m "Update configs"
 git push
 ```
+
+## Documentazione
+
+- [docs/laptop.md](docs/laptop.md): se si rompe il laptop
+- [docs/server.md](docs/server.md): se si rompe il server

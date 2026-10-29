@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-# Ripristino completo su un PC nuovo.
-#   bash bootstrap/restore-all.sh          (chiede conferma a ogni passo)
-#   bash bootstrap/restore-all.sh --yes    (tutto di fila)
 set -euo pipefail
 
 DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -19,19 +16,18 @@ STEPS=(
     80-verify.sh
 )
 
-echo "Ripristino completo da $DIR"
-echo "Password restic: Bitwarden -> 'restic laptop'"
+echo "password restic: Bitwarden -> restic laptop"
 echo
 
 for s in "${STEPS[@]}"; do
     if [ "$AUTO" -eq 0 ]; then
-        read -rp "Eseguo $s ? [Invio = si, n = salta] " a
-        [ "$a" = "n" ] && { echo "saltato"; continue; }
+        read -rp "$s? [Invio=si, n=salta] " a
+        [ "$a" = "n" ] && continue
     fi
     echo
-    echo "############ $s ############"
+    echo "--- $s"
     bash "$DIR/$s"
 done
 
 echo
-echo "Ripristino terminato. Riavvia e fai login."
+echo "fatto, riavvia"
